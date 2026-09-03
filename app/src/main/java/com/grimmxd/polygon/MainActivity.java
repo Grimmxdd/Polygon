@@ -89,19 +89,27 @@ public class MainActivity extends Activity {
         webView.loadUrl("file:///android_asset/polygon.html");
 
         // Solicitar ubicación al abrir Polygon por primera vez.
+        // Se hace después de cargar la WebView para evitar una carrera con
+        // la solicitud de geolocalización que puede disparar JavaScript.
+        webView.postDelayed(() -> requestLocationPermissionIfNeeded(), 450);
+    }
+
+    private void requestLocationPermissionIfNeeded() {
         if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED &&
+                == PackageManager.PERMISSION_GRANTED ||
             checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            locationPermissionRequestInProgress = true;
-            requestPermissions(
-                    new String[]{
-                            Manifest.permission.ACCESS_FINE_LOCATION,
-                            Manifest.permission.ACCESS_COARSE_LOCATION
-                    },
-                    LOCATION_REQUEST
-            );
+                == PackageManager.PERMISSION_GRANTED) {
+            return;
         }
+        if (locationPermissionRequestInProgress) return;
+        locationPermissionRequestInProgress = true;
+        requestPermissions(
+                new String[]{
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                },
+                LOCATION_REQUEST
+        );
     }
 
     @Override
