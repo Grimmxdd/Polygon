@@ -3,29 +3,28 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>POLYGON · El Tigre · v0.7</title>
+<title>POLYGON · El Tigre · v0.8</title>
 <style>
 :root{--bg:#05060b;--text:#f4f0ff;--muted:#9d97ae;--purple:#9b5cff;--green:#36e27a;--red:#ff3e52;--yellow:#ffc52e}
 *{box-sizing:border-box}
 html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,sans-serif}
-body{touch-action:none}
+body{touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;overscroll-behavior:none}
 .app{position:fixed;inset:0;overflow:hidden;background:var(--bg)}
 .top{position:absolute;left:0;right:0;top:0;height:82px;padding:20px 14px 8px;display:flex;align-items:center;justify-content:center;z-index:20;pointer-events:none}
 .brand{font-weight:900;letter-spacing:2px;font-size:21px;text-align:center;text-shadow:0 2px 10px #0008;display:flex;flex-direction:column;align-items:center}.city{display:block;width:100%;font-size:9px;letter-spacing:5px;color:#a96dff;text-align:center;line-height:1.15}
 .icon{width:44px;height:44px;border-radius:14px;border:1px solid #3a2b64;background:#0b0b16e8;color:#ddd2ff;font-size:22px;pointer-events:auto;box-shadow:0 5px 18px #0007}.menu-btn{position:absolute;left:14px;top:30px}
 .mapwrap{position:absolute;inset:0;overflow:hidden;background:radial-gradient(circle at 50% 48%,#101225,#05060b 74%)}
-svg{width:100%;height:100%;display:block;touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab;contain:layout paint}.mapwrap.dragging svg{cursor:grabbing}
+svg{width:100%;height:100%;display:block;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-user-drag:none;cursor:grab;pointer-events:auto}.mapwrap.dragging svg{cursor:grabbing}
 .road{fill:none;stroke-linecap:round;stroke-linejoin:round;opacity:.82}
 .road-motorway{stroke:#d5c6ff;stroke-width:5}.road-trunk{stroke:#bca7ff;stroke-width:4}.road-primary{stroke:#9f8cff;stroke-width:3.5}.road-secondary{stroke:#786f9c;stroke-width:2.7}.road-tertiary{stroke:#59566f;stroke-width:2}.road-unclassified{stroke:#414052;stroke-width:1.5}.road-residential{stroke:#343444;stroke-width:1.25}.road-living_street{stroke:#30303e;stroke-width:1.1}.road-service{stroke:#292936;stroke-width:.9}.road-motorway_link{stroke:#b9aaff;stroke-width:3}.road-trunk_link{stroke:#9b8cff;stroke-width:2.8}.road-primary_link{stroke:#8173c9;stroke-width:2.5}.road-secondary_link{stroke:#66607f;stroke-width:2.1}.road-tertiary_link{stroke:#4d4a60;stroke-width:1.7}
 .hex{fill:#4b6d9908;stroke:#64c2ff45;stroke-width:1.25;vector-effect:non-scaling-stroke}.hex.stable{fill:#38ff6c08;stroke:#7bff734c}.hex.unstable{fill:#ffc9280d;stroke:#ffd23f82}.hex.outage{fill:#ff304012;stroke:#ff405eb0}.hex.user-sector{fill:#fff!important;stroke:#fff!important;stroke-width:3.1}
-.hex.wave{stroke:var(--wave-color,#fff)!important;stroke-width:2.7!important;opacity:1}
+ .hex.wave{stroke:var(--wave-color,#fff)!important;stroke-width:2.7!important;opacity:1}.hex.user-sector.wave{fill:#fff!important;stroke:#fff!important;stroke-width:3.1!important;opacity:1}
 /* Un seul effet léger : pas de filtres, pas d'animations sur la grille de 530 hexagones. */
 
 .user-marker{display:none;position:absolute;width:72px;height:72px;transform:translate(-50%,-50%);pointer-events:none;z-index:8}.user-marker.show{display:block}.user-marker .ring{fill:none;stroke:#fff;opacity:0}.user-marker .ring.r1{animation:userPing 2.4s ease-out infinite}.user-marker .ring.r2{animation:userPing 2.4s ease-out .8s infinite}.user-marker .core{fill:#fff;stroke:#fff;stroke-width:2}.user-marker .halo{fill:#fff;opacity:.15}
 @keyframes userPing{0%{r:7;opacity:.8}75%,100%{r:27;opacity:0}}
 .controls{position:absolute;right:13px;top:92px;display:flex;flex-direction:column;gap:8px;z-index:12}.ctrl{width:44px;height:44px;border:1px solid #392b60;background:#0a0a16e8;color:#cbb8ff;border-radius:13px;font-size:21px;box-shadow:0 5px 18px #0007}.ctrl.locate{font-size:20px;color:#fff}
 .menu-panel{position:absolute;left:12px;top:84px;width:185px;background:#0b0b17f5;border:1px solid #5d4591;border-radius:17px;padding:8px;z-index:30;box-shadow:0 12px 35px #0009;transform:translateX(-120%);transition:transform .18s ease}.menu-panel.show{transform:translateX(0)}.menu-panel button{display:block;width:100%;text-align:left;border:0;background:none;color:#eee8ff;padding:12px;border-radius:11px;font-size:14px}.menu-panel button:active{background:#1a1530}.menu-panel small{display:block;color:#8e869f;padding:4px 12px 8px}
-.sector-peek{position:absolute;left:12px;right:12px;bottom:112px;max-width:430px;margin:auto;background:#0b0b17f5;border:1px solid #5d4591;border-radius:16px;padding:11px 13px;z-index:15;box-shadow:0 10px 30px #0009;transform:translateY(140%);transition:transform .18s ease}.sector-peek.show{transform:translateY(0)}.peek-title{display:flex;justify-content:space-between;align-items:center;font-weight:850}.peek-close{border:0;background:none;color:#aaa1bd;font-size:20px}.peek-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}.peek-grid small{display:block;color:#928aa5;font-size:10px}.peek-grid b{font-size:14px}.confidence{color:#b889ff}.status-stable{color:#36e27a}.status-unstable{color:#ffc52e}.status-outage{color:#ff3e52}
 .bottom{position:absolute;left:0;right:0;bottom:0;max-width:none;margin:auto;padding:12px 14px calc(10px + env(safe-area-inset-bottom));z-index:14;background:linear-gradient(180deg,#0d0b19f4,#080812);border:1px solid #4b3375;border-bottom:0;border-radius:24px 24px 0 0;box-shadow:0 -10px 35px #0008}
 .handle{width:46px;height:5px;border-radius:9px;background:#8661c7;margin:0 auto 12px}.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:11px}.card small{color:#968cae;display:block;font-size:11px}.card strong{font-size:20px}.state{color:var(--red)}
 .actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}.action{height:58px;border-radius:15px;border:1px solid;font-weight:800;color:white;font-size:15px}.action small{font-size:10px}.no{background:#6d142044;border-color:#ff3e52}.yes{background:#146d3c33;border-color:#36e27a}
@@ -4060,7 +4059,6 @@ svg{width:100%;height:100%;display:block;touch-action:none;user-select:none;-web
 <polygon id="H530" class="hex stable" data-status="stable" points="1472.5,1208.1 1457.0,1235.0 1426.0,1235.0 1410.5,1208.1 1426.0,1181.3 1457.0,1181.3" /></g></svg>
 <div id="userMarker" class="user-marker"><svg viewBox="-36 -36 72 72" aria-hidden="true"><circle class="halo" cx="0" cy="0" r="9"/><circle class="ring r1" cx="0" cy="0" r="7"/><circle class="ring r2" cx="0" cy="0" r="7"/><circle class="core" cx="0" cy="0" r="5"/></svg></div>
 <div class="controls"><button class="ctrl locate" onclick="locateButton()" aria-label="Mi ubicación">⌖</button><button class="ctrl" onclick="zoomBy(0.82)" aria-label="Acercar">＋</button><button class="ctrl" onclick="zoomBy(1.22)" aria-label="Alejar">−</button></div>
-<div id="sectorPeek" class="sector-peek"><div class="peek-title"><span>SECTOR <span id="peekSector">H017</span></span><button class="peek-close" onclick="closePeek()">×</button></div><div class="peek-grid"><div><small>REPORTES</small><b id="peekReports">0</b></div><div><small>CONFIANZA</small><b id="peekConfidence" class="confidence">Sin datos</b></div><div><small>ESTADO</small><b id="peekStatus">SIN DATOS</b></div></div></div>
 <div id="helpDialog" class="help-dialog" aria-hidden="true"><div class="help-box"><div class="help-title">¿Necesitas ayuda?</div><p>¿Tienes algún problema con la aplicación?<br>Escríbeme :)</p><small class="help-email">feralsmash26@gmail.com</small><div class="help-actions"><button class="help-cancel" onclick="closeHelp()">Cancelar</button><button class="help-report" onclick="reportError()">Reportar error</button></div></div></div><div id="toast" class="toast"></div></div>
 <section class="bottom"><div class="handle"></div><div class="grid"><div class="card"><small>TU SECTOR</small><strong id="sector">H017</strong><small>El Tigre</small></div><div class="card"><small>ESTADO</small><strong class="state" id="state">SIN LUZ</strong><small id="source">Esperando ubicación</small></div><div class="card"><small>REPORTES</small><strong id="reports">0</strong><small>En este sector</small></div></div><div class="actions"><button class="action no" onclick="report('outage')">⚡ NO TENGO LUZ<br><small>Reportar falla</small></button><button class="action yes" onclick="report('stable')">⚡ TENGO LUZ<br><small>Reportar servicio</small></button></div></section>
 
@@ -4071,41 +4069,133 @@ const mapwrap=document.querySelector('.mapwrap');
 let view={x:0,y:0,w:1400,h:1400};
 const MIN_ZOOM=420,MAX_ZOOM=1556;
 const PAN_SENSITIVITY=.62;
-let pointers=new Map(),dragStart=null,tapStart=null,moved=false,pinchStart=null;
+let activeTouches=new Map();
+let dragLast=null;
+let pinchState=null;
+let moved=false;
 let rafPending=false,pendingDX=0,pendingDY=0;
 const GEO={minLat:8.8304,maxLat:8.9329,minLon:-64.2972,maxLon:-64.2026,minX:-77.5,maxX:1472.5,minY:-80.5,maxY:1476.6};
 const hexes=[...document.querySelectorAll('.hex')];
 let currentHex=null,gpsReady=false,userPoint=null,deviceKey=localStorage.getItem('polygonDeviceKey');
 if(!deviceKey){deviceKey='dev-'+cryptoRandom();localStorage.setItem('polygonDeviceKey',deviceKey)}
+function cryptoRandom(){return Math.random().toString(36).slice(2)+Date.now().toString(36)}
 let waveTimer=null,waveGroups=[];
-function prepareWave(){if(waveTimer){clearInterval(waveTimer);waveTimer=null}for(const h of hexes)h.classList.remove('wave');waveGroups=[];if(!currentHex)return;const c=hexCache.find(x=>x.h===currentHex);if(!c)return;const step=53.7;const maxR=30*step;const buckets=new Map();for(const item of hexCache){const d=Math.hypot(item.cx-c.cx,item.cy-c.cy);if(d<=maxR){const ring=Math.min(30,Math.round(d/step));if(!buckets.has(ring))buckets.set(ring,[]);buckets.get(ring).push(item.h)}}waveGroups=[...buckets.entries()].sort((a,b)=>a[0]-b[0]).map(x=>x[1]);if(!waveGroups.length)return;let ringIndex=0;const paintRing=()=>{if(ringIndex>0){for(const h of waveGroups[ringIndex-1])h.classList.remove('wave')}const group=waveGroups[ringIndex];for(const h of group){h.style.setProperty('--wave-color',h.classList.contains('outage')?'#ff405e':h.classList.contains('unstable')?'#ffd23f':h.classList.contains('stable')?'#7bff73':'#b889ff');h.classList.add('wave')}ringIndex++;if(ringIndex>=waveGroups.length)ringIndex=0};paintRing();waveTimer=setInterval(paintRing,105)}
+function prepareWave(){
+  if(waveTimer){clearInterval(waveTimer);waveTimer=null}
+  for(const h of hexes)h.classList.remove('wave');
+  waveGroups=[];
+  if(!currentHex)return;
+  const c=hexCache.find(x=>x.h===currentHex); if(!c)return;
+  const step=53.7, maxR=30*step, buckets=new Map();
+  for(const item of hexCache){
+    const d=Math.hypot(item.cx-c.cx,item.cy-c.cy);
+    if(d<=maxR){
+      const ring=Math.min(30,Math.round(d/step));
+      if(!buckets.has(ring))buckets.set(ring,[]);
+      buckets.get(ring).push(item.h);
+    }
+  }
+  waveGroups=[...buckets.entries()].sort((a,b)=>a[0]-b[0]).map(x=>x[1]);
+  if(!waveGroups.length)return;
+  let ringIndex=0;
+  const paintRing=()=>{
+    // Never touch the user's white hex.
+    for(const h of hexes)if(h!==currentHex)h.classList.remove('wave');
+    const group=waveGroups[ringIndex]||[];
+    for(const id of group){
+      const h=document.getElementById(id); if(!h||h===currentHex)continue;
+      h.style.setProperty('--wave-color',h.classList.contains('outage')?'#ff405e':h.classList.contains('unstable')?'#ffd23f':h.classList.contains('stable')?'#7bff73':'#b889ff');
+      h.classList.add('wave');
+    }
+    ringIndex=(ringIndex+1)%waveGroups.length;
+  };
+  paintRing();
+  waveTimer=setInterval(paintRing,110);
+}
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(window.__t);window.__t=setTimeout(()=>t.classList.remove('show'),1800)}
 function toggleMenu(force){const m=document.getElementById('menuPanel');m.classList.toggle('show',force===undefined?!m.classList.contains('show'):force)}
 function openHelp(){toggleMenu(false);document.getElementById('helpDialog').classList.add('show');document.getElementById('helpDialog').setAttribute('aria-hidden','false')}
 function closeHelp(){document.getElementById('helpDialog').classList.remove('show');document.getElementById('helpDialog').setAttribute('aria-hidden','true')}
-function reportError(){window.location.href='https://mail.google.com/mail/?view=cm&fs=1&to=feralsmash26%40gmail.com&su=Reporte%20de%20error%20en%20Polygon&body=Hola%20Lokigraph%2C%20quiero%20reportar%20un%20problema%20con%20Polygon.%0A%0ADescripci%C3%B3n%20del%20problema%3A%0A';}
+function reportError(){window.location.href='https://mail.google.com/mail/?view=cm&fs=1&to=feralsmash26%40gmail.com&su=Reporte%20de%20error%20en%20Polygon&body=Hola%20Lokigraph%2C%20quiero%20reportar%20un%20problema%20con%20Polygon.%0A%0ADescripci%C3%B3n%20del%20problema%3A%0A'}
 function clampView(){view.w=Math.max(MIN_ZOOM,Math.min(MAX_ZOOM,view.w));view.h=view.w;view.x=Math.max(-250,Math.min(250+1400-view.w,view.x));view.y=Math.max(-250,Math.min(250+1400-view.h,view.y))}
 function applyView(){svg.setAttribute('viewBox',`${view.x} ${view.y} ${view.w} ${view.h}`);positionUserMarker()}
 function mapMetrics(){const r=mapwrap.getBoundingClientRect();const scale=Math.min(r.width/view.w,r.height/view.h);const ox=(r.width-view.w*scale)/2;const oy=(r.height-view.h*scale)/2;return{r,scale,ox,oy}}
 function screenToSvg(x,y){const m=mapMetrics();return{x:view.x+(x-m.r.left-m.ox)/m.scale,y:view.y+(y-m.r.top-m.oy)/m.scale}}
 function zoomAt(factor,sx,sy){const before=screenToSvg(sx,sy);const nw=Math.max(MIN_ZOOM,Math.min(MAX_ZOOM,view.w*factor));const ratio=nw/view.w;view.x=before.x-(before.x-view.x)*ratio;view.y=before.y-(before.y-view.y)*ratio;view.w=nw;view.h=nw;clampView();applyView()}
 function zoomBy(factor){zoomAt(factor,window.innerWidth/2,window.innerHeight/2)}
-function flushPan(){rafPending=false;if(!pendingDX&&!pendingDY)return;const m=mapMetrics();view.x-=pendingDX*PAN_SENSITIVITY/m.scale;view.y-=pendingDY*PAN_SENSITIVITY/m.scale;pendingDX=pendingDY=0;clampView();applyView()}
+function flushPan(){rafPending=false;if(!pendingDX&&!pendingDY)return;const m=mapMetrics();view.x-=pendingDX/m.scale;view.y-=pendingDY/m.scale;pendingDX=pendingDY=0;clampView();applyView()}
 function panBy(dx,dy){pendingDX+=dx;pendingDY+=dy;if(!rafPending){rafPending=true;requestAnimationFrame(flushPan)}}
-svg.addEventListener('pointerdown',e=>{pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});svg.setPointerCapture(e.pointerId);moved=false;if(pointers.size===1){dragStart={x:e.clientX,y:e.clientY};tapStart={target:e.target}}else if(pointers.size===2){dragStart=null;const [a,b]=[...pointers.values()];pinchStart={distance:Math.hypot(a.x-b.x,a.y-b.y),midX:(a.x+b.x)/2,midY:(a.y+b.y)/2}}});
-svg.addEventListener('pointermove',e=>{if(!pointers.has(e.pointerId))return;pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});if(pointers.size===1&&dragStart){const dx=e.clientX-dragStart.x,dy=e.clientY-dragStart.y;if(Math.abs(dx)+Math.abs(dy)>6)moved=true;panBy(dx,dy);dragStart={x:e.clientX,y:e.clientY}}else if(pointers.size===2&&pinchStart){moved=true;const [a,b]=[...pointers.values()];const d=Math.max(1,Math.hypot(a.x-b.x,a.y-b.y));const factor=pinchStart.distance/d;const nw=Math.max(MIN_ZOOM,Math.min(MAX_ZOOM,view.w*factor));const oldW=view.w;const mid=screenToSvg(pinchStart.midX,pinchStart.midY);const r=nw/oldW;view.x=mid.x-(mid.x-view.x)*r;view.y=mid.y-(mid.y-view.y)*r;view.w=nw;view.h=nw;pinchStart={distance:d,midX:(a.x+b.x)/2,midY:(a.y+b.y)/2};clampView();if(!rafPending){rafPending=true;requestAnimationFrame(flushPan)}}});
-function endPointer(e){const wasTap=!moved&&pointers.size===1&&tapStart;pointers.delete(e.pointerId);if(wasTap){const h=e.target.closest&&e.target.closest('.hex');if(h)showSectorInfo(h)}if(pointers.size<2)pinchStart=null;if(pointers.size===0){dragStart=null;tapStart=null}}
-svg.addEventListener('pointerup',endPointer);svg.addEventListener('pointercancel',e=>{pointers.delete(e.pointerId);dragStart=null;tapStart=null;pinchStart=null});
+function ignoredTouchTarget(target){return !!(target && target.closest && target.closest('.top,.controls,.menu-panel,.bottom,.help-dialog,button'))}
+function touchPoint(t){return{x:t.clientX,y:t.clientY}}
+function touchStart(e){
+  if(ignoredTouchTarget(e.target))return;
+  e.preventDefault();
+  activeTouches.clear();
+  for(const t of e.touches)activeTouches.set(t.identifier,touchPoint(t));
+  moved=false;dragLast=null;pinchState=null;
+  if(e.touches.length===1){dragLast=touchPoint(e.touches[0]);}
+  else if(e.touches.length>=2){
+    const a=e.touches[0],b=e.touches[1];
+    const d=Math.max(1,Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY));
+    pinchState={distance:d,midX:(a.clientX+b.clientX)/2,midY:(a.clientY+b.clientY)/2};
+    moved=true;
+  }
+}
+function touchMove(e){
+  if(!activeTouches.size)return;
+  e.preventDefault();
+  if(e.touches.length===1){
+    const t=e.touches[0],now=touchPoint(t);
+    if(!dragLast)dragLast=now;
+    const dx=now.x-dragLast.x,dy=now.y-dragLast.y;
+    if(Math.abs(dx)+Math.abs(dy)>2)moved=true;
+    panBy(dx,dy);
+    dragLast=now;
+    return;
+  }
+  if(e.touches.length>=2){
+    const a=e.touches[0],b=e.touches[1];
+    const d=Math.max(1,Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY));
+    const mx=(a.clientX+b.clientX)/2,my=(a.clientY+b.clientY)/2;
+    if(!pinchState){pinchState={distance:d,midX:mx,midY:my};return}
+    moved=true;
+    const factor=pinchState.distance/d;
+    if(Math.abs(factor-1)>0.0005)zoomAt(factor,mx,my);
+    const mdx=mx-pinchState.midX,mdy=my-pinchState.midY;
+    if(Math.abs(mdx)+Math.abs(mdy)>0.2)panBy(mdx,mdy);
+    pinchState={distance:d,midX:mx,midY:my};
+  }
+}
+function touchEnd(e){
+  e.preventDefault();
+  if(e.touches.length===0){activeTouches.clear();dragLast=null;pinchState=null;return}
+  if(e.touches.length===1){const t=e.touches[0];dragLast=touchPoint(t);pinchState=null;}
+  activeTouches.clear();
+  for(const t of e.touches)activeTouches.set(t.identifier,touchPoint(t));
+}
+mapwrap.addEventListener('touchstart',touchStart,{passive:false});
+mapwrap.addEventListener('touchmove',touchMove,{passive:false});
+mapwrap.addEventListener('touchend',touchEnd,{passive:false});
+mapwrap.addEventListener('touchcancel',touchEnd,{passive:false});
+// Pointer fallback for browser previews / devices that expose pointer events.
+let pointerActive=false,pointerLast=null;
+mapwrap.addEventListener('pointerdown',e=>{
+  if(e.pointerType==='touch'||ignoredTouchTarget(e.target))return;
+  e.preventDefault();pointerActive=true;pointerLast={x:e.clientX,y:e.clientY};
+  try{mapwrap.setPointerCapture(e.pointerId)}catch(_){ }
+});
+mapwrap.addEventListener('pointermove',e=>{
+  if(e.pointerType==='touch'||!pointerActive||!pointerLast)return;
+  e.preventDefault();const dx=e.clientX-pointerLast.x,dy=e.clientY-pointerLast.y;panBy(dx,dy);pointerLast={x:e.clientX,y:e.clientY};
+});
+mapwrap.addEventListener('pointerup',e=>{if(e.pointerType!=='touch'){pointerActive=false;pointerLast=null}});
+mapwrap.addEventListener('pointercancel',e=>{if(e.pointerType!=='touch'){pointerActive=false;pointerLast=null}});
 function geoToSvg(lat,lon){return{x:GEO.minX+(lon-GEO.minLon)/(GEO.maxLon-GEO.minLon)*(GEO.maxX-GEO.minX),y:GEO.minY+(GEO.maxLat-lat)/(GEO.maxLat-GEO.minLat)*(GEO.maxY-GEO.minY)}}
 const hexCache=hexes.map(h=>{const p=h.getAttribute('points').trim().split(/\s+/).map(v=>v.split(',').map(Number));let cx=0,cy=0;for(const q of p){cx+=q[0];cy+=q[1]}return{h,p,cx:cx/p.length,cy:cy/p.length}});
 function pointInPoly(x,y,pts){let inside=false;for(let i=0,j=pts.length-1;i<pts.length;j=i++){const xi=pts[i][0],yi=pts[i][1],xj=pts[j][0],yj=pts[j][1];const hit=((yi>y)!=(yj>y))&&(x<(xj-xi)*(y-yi)/(yj-yi)+xi);if(hit)inside=!inside}return inside}
 function findHex(x,y){for(const item of hexCache)if(pointInPoly(x,y,item.p))return item.h;let best=null,bd=Infinity;for(const item of hexCache){const d=(item.cx-x)**2+(item.cy-y)**2;if(d<bd){bd=d;best=item.h}}return bd<9000?best:null}
 function statusLabel(s){return s==='stable'?'ESTABLE':s==='unstable'?'INESTABLE':s==='outage'?'SIN LUZ':'SIN DATOS'}
-function statusClass(s){return s==='stable'?'status-stable':s==='unstable'?'status-unstable':s==='outage'?'status-outage':''}
-function confidenceFor(h){const n=Number(h.dataset.reportCount||0);return n?Math.round(Math.min(95,50+10*Math.log2(n))):0}
-function showSectorInfo(h){const n=Number(h.dataset.reportCount||0),c=confidenceFor(h),s=h.dataset.status;document.getElementById('peekSector').textContent=h.id;document.getElementById('peekReports').textContent=n;const conf=document.getElementById('peekConfidence');conf.textContent=c?c+'%':'Sin datos';const st=document.getElementById('peekStatus');st.textContent=statusLabel(s);st.className=statusClass(s);document.getElementById('sectorPeek').classList.add('show')}
-function closePeek(){document.getElementById('sectorPeek').classList.remove('show')}
-function updateSector(h){if(!h)return;currentHex=h;for(const x of hexes)if(x!==h)x.classList.remove('user-sector');h.classList.add('user-sector');prepareWave();const s=h.dataset.status;const st=document.getElementById('state');document.getElementById('sector').textContent=h.id;st.textContent=s==='stable'?'TENGO LUZ':s==='unstable'?'INESTABLE':'SIN LUZ';st.style.color=s==='stable'?'#36e27a':s==='unstable'?'#ffc52e':'#ff3e52';document.getElementById('reports').textContent=h.dataset.reportCount||'0'}
+function updateSector(h){if(!h)return;currentHex=h;for(const x of hexes){x.classList.toggle('user-sector',x===h);if(x===h){x.style.setProperty('--wave-color','#fff');x.classList.remove('wave')}}h.classList.add('user-sector');prepareWave();const s=h.dataset.status;const st=document.getElementById('state');document.getElementById('sector').textContent=h.id;st.textContent=s==='stable'?'TENGO LUZ':s==='unstable'?'INESTABLE':'SIN LUZ';st.style.color=s==='stable'?'#36e27a':s==='unstable'?'#ffc52e':'#ff3e52';document.getElementById('reports').textContent=h.dataset.reportCount||'0'}
 function positionUserMarker(){const marker=document.getElementById('userMarker');if(!userPoint){marker.classList.remove('show');return}const m=mapMetrics();const x=m.r.left+m.ox+(userPoint.x-view.x)*m.scale;const y=m.r.top+m.oy+(userPoint.y-view.y)*m.scale;marker.style.left=(x-m.r.left)+'px';marker.style.top=(y-m.r.top)+'px';marker.classList.add('show')}
 function handleLocationSuccess(pos,center){userPoint=geoToSvg(pos.coords.latitude,pos.coords.longitude);const h=findHex(userPoint.x,userPoint.y);if(!h){toast('📍 Fuera de la zona de Polygon');return}gpsReady=true;updateSector(h);document.getElementById('source').textContent='Sector determinado por GPS';if(center){const f=Math.max(MIN_ZOOM,Math.min(700,view.w*.5));view.w=f;view.h=f;view.x=userPoint.x-f/2;view.y=userPoint.y-f/2;clampView();applyView()}else positionUserMarker();toast('📍 Sector '+h.id+' detectado')}
 function requestLocation(center=true){if(!navigator.geolocation){toast('GPS no disponible');return}navigator.geolocation.getCurrentPosition(pos=>handleLocationSuccess(pos,center),()=>toast('📍 Permiso de ubicación no concedido'),{enableHighAccuracy:true,timeout:10000,maximumAge:60000})}
@@ -4113,6 +4203,6 @@ function locateButton(){requestLocation(true)}
 function requireGPS(callback){if(!navigator.geolocation){toast('GPS no disponible');return}navigator.geolocation.getCurrentPosition(pos=>{userPoint=geoToSvg(pos.coords.latitude,pos.coords.longitude);const h=findHex(userPoint.x,userPoint.y);if(!h){toast('📍 No estás dentro de la zona de Polygon');return}gpsReady=true;updateSector(h);positionUserMarker();callback(h)},()=>toast('📍 Necesitamos tu ubicación para reportar'),{enableHighAccuracy:true,timeout:10000,maximumAge:60000})}
 function report(status){requireGPS(h=>{if(status==='outage'){const key='polygonOutage-'+h.id;if(localStorage.getItem(key)){toast('🛑 Ya reportaste sin luz en '+h.id);return}}h.classList.remove('stable','unstable','outage');h.classList.add(status);h.dataset.status=status;h.dataset.reportCount=String(Number(h.dataset.reportCount||0)+1);if(status==='outage')localStorage.setItem('polygonOutage-'+h.id,JSON.stringify({device:deviceKey,at:Date.now()}));updateSector(h);document.getElementById('source').textContent='Reporte registrado · GPS verificado';toast(status==='stable'?'🟢 Reporte guardado':'🔴 Reporte guardado')})}
 window.addEventListener('resize',()=>positionUserMarker());
-window.addEventListener('load',()=>{applyView()});
+window.addEventListener('load',()=>{applyView();setTimeout(()=>requestLocation(true),250)});
 applyView();
 </script></body></html>
