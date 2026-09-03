@@ -21,6 +21,7 @@ public class MainActivity extends Activity {
     private WebView webView;
     private String pendingOrigin;
     private GeolocationPermissions.Callback pendingCallback;
+    private boolean locationPermissionRequestInProgress = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +67,15 @@ public class MainActivity extends Activity {
                     return;
                 }
 
+                // Si la solicitud inicial de Android ya está abierta, guardamos
+                // este callback y lo resolvemos cuando el usuario responda.
                 pendingOrigin = origin;
                 pendingCallback = callback;
+                if (locationPermissionRequestInProgress) {
+                    return;
+                }
+
+                locationPermissionRequestInProgress = true;
                 requestPermissions(
                         new String[]{
                                 Manifest.permission.ACCESS_FINE_LOCATION,
@@ -79,6 +87,21 @@ public class MainActivity extends Activity {
         });
 
         webView.loadUrl("file:///android_asset/polygon.html");
+
+        // Solicitar ubicación al abrir Polygon por primera vez.
+        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED &&
+            checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            locationPermissionRequestInProgress = true;
+            requestPermissions(
+                    new String[]{
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_COARSE_LOCATION
+                    },
+                    LOCATION_REQUEST
+            );
+        }
     }
 
     @Override
@@ -86,18 +109,22 @@ public class MainActivity extends Activity {
             int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if (requestCode == LOCATION_REQUEST && pendingCallback != null) {
-            boolean granted = false;
-            for (int result : grantResults) {
-                if (result == PackageManager.PERMISSION_GRANTED) {
-                    granted = true;
-                    break;
-                }
-            }
+        if (requestCode == LOCATION_REQUEST) {
+            locationPermissionRequestInProgress = false;
 
-            pendingCallback.invoke(pendingOrigin, granted, false);
-            pendingOrigin = null;
-            pendingCallback = null;
+            if (pendingCallback != null) {
+                boolean granted = false;
+                for (int result : grantResults) {
+                    if (result == PackageManager.PERMISSION_GRANTED) {
+                        granted = true;
+                        break;
+                    }
+                }
+
+                pendingCallback.invoke(pendingOrigin, granted, false);
+                pendingOrigin = null;
+                pendingCallback = null;
+            }
         }
     }
 
