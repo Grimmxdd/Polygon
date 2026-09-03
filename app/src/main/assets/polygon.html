@@ -14,16 +14,16 @@ body{touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-c
 .brand{font-weight:900;letter-spacing:2px;font-size:21px;text-align:center;text-shadow:0 2px 10px #0008;display:flex;flex-direction:column;align-items:center}.city{display:block;width:100%;font-size:9px;letter-spacing:5px;color:#a96dff;text-align:center;line-height:1.15}
 .icon{width:44px;height:44px;border-radius:14px;border:1px solid #3a2b64;background:#0b0b16e8;color:#ddd2ff;font-size:22px;pointer-events:auto;box-shadow:0 5px 18px #0007}.menu-btn{position:absolute;left:14px;top:30px}
 .mapwrap{position:absolute;inset:0;overflow:hidden;background:radial-gradient(circle at 50% 48%,#101225,#05060b 74%)}
-svg{width:100%;height:100%;display:block;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-user-drag:none;cursor:grab;pointer-events:auto}.mapwrap.dragging svg{cursor:grabbing}
+svg{width:100%;height:100%;display:block;touch-action:none;user-select:none;contain:layout paint;-webkit-user-select:none;-webkit-user-drag:none;cursor:grab;pointer-events:auto}.mapwrap.dragging svg{cursor:grabbing}
 .road{fill:none;stroke-linecap:round;stroke-linejoin:round;opacity:.82}
 .road-motorway{stroke:#d5c6ff;stroke-width:5}.road-trunk{stroke:#bca7ff;stroke-width:4}.road-primary{stroke:#9f8cff;stroke-width:3.5}.road-secondary{stroke:#786f9c;stroke-width:2.7}.road-tertiary{stroke:#59566f;stroke-width:2}.road-unclassified{stroke:#414052;stroke-width:1.5}.road-residential{stroke:#343444;stroke-width:1.25}.road-living_street{stroke:#30303e;stroke-width:1.1}.road-service{stroke:#292936;stroke-width:.9}.road-motorway_link{stroke:#b9aaff;stroke-width:3}.road-trunk_link{stroke:#9b8cff;stroke-width:2.8}.road-primary_link{stroke:#8173c9;stroke-width:2.5}.road-secondary_link{stroke:#66607f;stroke-width:2.1}.road-tertiary_link{stroke:#4d4a60;stroke-width:1.7}
-.hex{fill:#4b6d9908;stroke:#64c2ff45;stroke-width:1.25;vector-effect:non-scaling-stroke}.hex.stable{fill:#38ff6c08;stroke:#7bff734c}.hex.unstable{fill:#ffc9280d;stroke:#ffd23f82}.hex.outage{fill:#ff304012;stroke:#ff405eb0}.hex.user-sector{fill:#fff!important;stroke:#fff!important;stroke-width:3.1}
- .hex.wave{stroke:var(--wave-color,#fff)!important;stroke-width:2.7!important;opacity:1}.hex.user-sector.wave{fill:#fff!important;stroke:#fff!important;stroke-width:3.1!important;opacity:1}
+.hex{fill:#4b6d9908;stroke:#64c2ff45;stroke-width:1.25;vector-effect:non-scaling-stroke}.hex.stable{fill:#38ff6c08;stroke:#7bff734c}.hex.unstable{fill:#ffc9280d;stroke:#ffd23f82}.hex.outage{fill:#ff304012;stroke:#ff405eb0}.hex.user-sector{fill:transparent!important;stroke:#fff!important;stroke-width:3.1}
+ .hex.wave{stroke:var(--wave-color,#fff)!important;stroke-width:2.7!important;opacity:1}.hex.user-sector.wave{fill:transparent!important;stroke:#fff!important;stroke-width:3.1!important;opacity:1}
 /* Un seul effet léger : pas de filtres, pas d'animations sur la grille de 530 hexagones. */
 
 .user-marker{display:none;position:absolute;width:72px;height:72px;transform:translate(-50%,-50%);pointer-events:none;z-index:8}.user-marker.show{display:block}.user-marker .ring{fill:none;stroke:#fff;opacity:0}.user-marker .ring.r1{animation:userPing 2.4s ease-out infinite}.user-marker .ring.r2{animation:userPing 2.4s ease-out .8s infinite}.user-marker .core{fill:#fff;stroke:#fff;stroke-width:2}.user-marker .halo{fill:#fff;opacity:.15}
 @keyframes userPing{0%{r:7;opacity:.8}75%,100%{r:27;opacity:0}}
-.controls{position:absolute;right:13px;top:92px;display:flex;flex-direction:column;gap:8px;z-index:12}.ctrl{width:44px;height:44px;border:1px solid #392b60;background:#0a0a16e8;color:#cbb8ff;border-radius:13px;font-size:21px;box-shadow:0 5px 18px #0007}.ctrl.locate{font-size:20px;color:#fff}
+.controls{position:absolute;right:13px;top:154px;display:flex;flex-direction:column;gap:8px;z-index:60;pointer-events:auto}.ctrl{width:52px;height:52px;border:1px solid #392b60;background:#0a0a16e8;color:#cbb8ff;border-radius:13px;font-size:21px;box-shadow:0 5px 18px #0007}.ctrl.locate{font-size:20px;color:#fff}
 .menu-panel{position:absolute;left:12px;top:84px;width:185px;background:#0b0b17f5;border:1px solid #5d4591;border-radius:17px;padding:8px;z-index:30;box-shadow:0 12px 35px #0009;transform:translateX(-120%);transition:transform .18s ease}.menu-panel.show{transform:translateX(0)}.menu-panel button{display:block;width:100%;text-align:left;border:0;background:none;color:#eee8ff;padding:12px;border-radius:11px;font-size:14px}.menu-panel button:active{background:#1a1530}.menu-panel small{display:block;color:#8e869f;padding:4px 12px 8px}
 .bottom{position:absolute;left:0;right:0;bottom:0;max-width:none;margin:auto;padding:12px 14px calc(10px + env(safe-area-inset-bottom));z-index:14;background:linear-gradient(180deg,#0d0b19f4,#080812);border:1px solid #4b3375;border-bottom:0;border-radius:24px 24px 0 0;box-shadow:0 -10px 35px #0008}
 .handle{width:46px;height:5px;border-radius:9px;background:#8661c7;margin:0 auto 12px}.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:11px}.card small{color:#968cae;display:block;font-size:11px}.card strong{font-size:20px}.state{color:var(--red)}
@@ -4058,7 +4058,7 @@ svg{width:100%;height:100%;display:block;touch-action:none;user-select:none;-web
 <polygon id="H529" class="hex stable" data-status="stable" points="1472.5,1154.4 1457.0,1181.3 1426.0,1181.3 1410.5,1154.4 1426.0,1127.6 1457.0,1127.6" />
 <polygon id="H530" class="hex stable" data-status="stable" points="1472.5,1208.1 1457.0,1235.0 1426.0,1235.0 1410.5,1208.1 1426.0,1181.3 1457.0,1181.3" /></g></svg>
 <div id="userMarker" class="user-marker"><svg viewBox="-36 -36 72 72" aria-hidden="true"><circle class="halo" cx="0" cy="0" r="9"/><circle class="ring r1" cx="0" cy="0" r="7"/><circle class="ring r2" cx="0" cy="0" r="7"/><circle class="core" cx="0" cy="0" r="5"/></svg></div>
-<div class="controls"><button class="ctrl locate" onclick="locateButton()" aria-label="Mi ubicación">⌖</button><button class="ctrl" onclick="zoomBy(0.82)" aria-label="Acercar">＋</button><button class="ctrl" onclick="zoomBy(1.22)" aria-label="Alejar">−</button></div>
+<div class="controls"><button id="locateButton" class="ctrl locate" type="button" aria-label="Mi ubicación">⌖</button></div>
 <div id="helpDialog" class="help-dialog" aria-hidden="true"><div class="help-box"><div class="help-title">¿Necesitas ayuda?</div><p>¿Tienes algún problema con la aplicación?<br>Escríbeme :)</p><small class="help-email">feralsmash26@gmail.com</small><div class="help-actions"><button class="help-cancel" onclick="closeHelp()">Cancelar</button><button class="help-report" onclick="reportError()">Reportar error</button></div></div></div><div id="toast" class="toast"></div></div>
 <section class="bottom"><div class="handle"></div><div class="grid"><div class="card"><small>TU SECTOR</small><strong id="sector">H017</strong><small>El Tigre</small></div><div class="card"><small>ESTADO</small><strong class="state" id="state">SIN LUZ</strong><small id="source">Esperando ubicación</small></div><div class="card"><small>REPORTES</small><strong id="reports">0</strong><small>En este sector</small></div></div><div class="actions"><button class="action no" onclick="report('outage')">⚡ NO TENGO LUZ<br><small>Reportar falla</small></button><button class="action yes" onclick="report('stable')">⚡ TENGO LUZ<br><small>Reportar servicio</small></button></div></section>
 
@@ -4067,7 +4067,7 @@ svg{width:100%;height:100%;display:block;touch-action:none;user-select:none;-web
 const svg=document.querySelector('.mapwrap svg');
 const mapwrap=document.querySelector('.mapwrap');
 let view={x:0,y:0,w:1400,h:1400};
-const MIN_ZOOM=420,MAX_ZOOM=1556;
+const MIN_ZOOM=460,MAX_ZOOM=1200;
 const PAN_SENSITIVITY=.62;
 let activeTouches=new Map();
 let dragLast=null;
@@ -4122,7 +4122,6 @@ function applyView(){svg.setAttribute('viewBox',`${view.x} ${view.y} ${view.w} $
 function mapMetrics(){const r=mapwrap.getBoundingClientRect();const scale=Math.min(r.width/view.w,r.height/view.h);const ox=(r.width-view.w*scale)/2;const oy=(r.height-view.h*scale)/2;return{r,scale,ox,oy}}
 function screenToSvg(x,y){const m=mapMetrics();return{x:view.x+(x-m.r.left-m.ox)/m.scale,y:view.y+(y-m.r.top-m.oy)/m.scale}}
 function zoomAt(factor,sx,sy){const before=screenToSvg(sx,sy);const nw=Math.max(MIN_ZOOM,Math.min(MAX_ZOOM,view.w*factor));const ratio=nw/view.w;view.x=before.x-(before.x-view.x)*ratio;view.y=before.y-(before.y-view.y)*ratio;view.w=nw;view.h=nw;clampView();applyView()}
-function zoomBy(factor){zoomAt(factor,window.innerWidth/2,window.innerHeight/2)}
 function flushPan(){rafPending=false;if(!pendingDX&&!pendingDY)return;const m=mapMetrics();view.x-=pendingDX/m.scale;view.y-=pendingDY/m.scale;pendingDX=pendingDY=0;clampView();applyView()}
 function panBy(dx,dy){pendingDX+=dx;pendingDY+=dy;if(!rafPending){rafPending=true;requestAnimationFrame(flushPan)}}
 function ignoredTouchTarget(target){return !!(target && target.closest && target.closest('.top,.controls,.menu-panel,.bottom,.help-dialog,button'))}
@@ -4148,7 +4147,7 @@ function touchMove(e){
     const t=e.touches[0],now=touchPoint(t);
     if(!dragLast)dragLast=now;
     const dx=now.x-dragLast.x,dy=now.y-dragLast.y;
-    if(Math.abs(dx)+Math.abs(dy)>2)moved=true;
+    if(Math.abs(dx)+Math.abs(dy)>1)moved=true;
     panBy(dx,dy);
     dragLast=now;
     return;
@@ -4160,24 +4159,25 @@ function touchMove(e){
     if(!pinchState){pinchState={distance:d,midX:mx,midY:my};return}
     moved=true;
     const factor=pinchState.distance/d;
-    if(Math.abs(factor-1)>0.0005)zoomAt(factor,mx,my);
+    if(Math.abs(factor-1)>0.001)zoomAt(factor,mx,my);
     const mdx=mx-pinchState.midX,mdy=my-pinchState.midY;
-    if(Math.abs(mdx)+Math.abs(mdy)>0.2)panBy(mdx,mdy);
+    if(Math.abs(mdx)+Math.abs(mdy)>0.15)panBy(mdx,mdy);
     pinchState={distance:d,midX:mx,midY:my};
   }
 }
 function touchEnd(e){
   e.preventDefault();
   if(e.touches.length===0){activeTouches.clear();dragLast=null;pinchState=null;return}
-  if(e.touches.length===1){const t=e.touches[0];dragLast=touchPoint(t);pinchState=null;}
+  if(e.touches.length===1){dragLast=touchPoint(e.touches[0]);pinchState=null;}
   activeTouches.clear();
   for(const t of e.touches)activeTouches.set(t.identifier,touchPoint(t));
 }
-mapwrap.addEventListener('touchstart',touchStart,{passive:false});
-mapwrap.addEventListener('touchmove',touchMove,{passive:false});
-mapwrap.addEventListener('touchend',touchEnd,{passive:false});
-mapwrap.addEventListener('touchcancel',touchEnd,{passive:false});
-// Pointer fallback for browser previews / devices that expose pointer events.
+// Capture at document level: more reliable on Android WebView than binding only to the SVG.
+document.addEventListener('touchstart',touchStart,{passive:false,capture:true});
+document.addEventListener('touchmove',touchMove,{passive:false,capture:true});
+document.addEventListener('touchend',touchEnd,{passive:false,capture:true});
+document.addEventListener('touchcancel',touchEnd,{passive:false,capture:true});
+// Pointer fallback for desktop/browser previews.
 let pointerActive=false,pointerLast=null;
 mapwrap.addEventListener('pointerdown',e=>{
   if(e.pointerType==='touch'||ignoredTouchTarget(e.target))return;
@@ -4197,12 +4197,14 @@ function findHex(x,y){for(const item of hexCache)if(pointInPoly(x,y,item.p))retu
 function statusLabel(s){return s==='stable'?'ESTABLE':s==='unstable'?'INESTABLE':s==='outage'?'SIN LUZ':'SIN DATOS'}
 function updateSector(h){if(!h)return;currentHex=h;for(const x of hexes){x.classList.toggle('user-sector',x===h);if(x===h){x.style.setProperty('--wave-color','#fff');x.classList.remove('wave')}}h.classList.add('user-sector');prepareWave();const s=h.dataset.status;const st=document.getElementById('state');document.getElementById('sector').textContent=h.id;st.textContent=s==='stable'?'TENGO LUZ':s==='unstable'?'INESTABLE':'SIN LUZ';st.style.color=s==='stable'?'#36e27a':s==='unstable'?'#ffc52e':'#ff3e52';document.getElementById('reports').textContent=h.dataset.reportCount||'0'}
 function positionUserMarker(){const marker=document.getElementById('userMarker');if(!userPoint){marker.classList.remove('show');return}const m=mapMetrics();const x=m.r.left+m.ox+(userPoint.x-view.x)*m.scale;const y=m.r.top+m.oy+(userPoint.y-view.y)*m.scale;marker.style.left=(x-m.r.left)+'px';marker.style.top=(y-m.r.top)+'px';marker.classList.add('show')}
-function handleLocationSuccess(pos,center){userPoint=geoToSvg(pos.coords.latitude,pos.coords.longitude);const h=findHex(userPoint.x,userPoint.y);if(!h){toast('📍 Fuera de la zona de Polygon');return}gpsReady=true;updateSector(h);document.getElementById('source').textContent='Sector determinado por GPS';if(center){const f=Math.max(MIN_ZOOM,Math.min(700,view.w*.5));view.w=f;view.h=f;view.x=userPoint.x-f/2;view.y=userPoint.y-f/2;clampView();applyView()}else positionUserMarker();toast('📍 Sector '+h.id+' detectado')}
+function handleLocationSuccess(pos,center){userPoint=geoToSvg(pos.coords.latitude,pos.coords.longitude);const h=findHex(userPoint.x,userPoint.y);if(!h){toast('📍 Fuera de la zona de Polygon');return}gpsReady=true;updateSector(h);document.getElementById('source').textContent='Sector determinado por GPS';if(center){const f=Math.max(MIN_ZOOM,Math.min(620,view.w*.52));view.w=f;view.h=f;view.x=userPoint.x-f/2;view.y=userPoint.y-f/2;clampView();applyView()}else positionUserMarker();toast('📍 Sector '+h.id+' detectado')}
 function requestLocation(center=true){if(!navigator.geolocation){toast('GPS no disponible');return}navigator.geolocation.getCurrentPosition(pos=>handleLocationSuccess(pos,center),()=>toast('📍 Permiso de ubicación no concedido'),{enableHighAccuracy:true,timeout:10000,maximumAge:60000})}
 function locateButton(){requestLocation(true)}
 function requireGPS(callback){if(!navigator.geolocation){toast('GPS no disponible');return}navigator.geolocation.getCurrentPosition(pos=>{userPoint=geoToSvg(pos.coords.latitude,pos.coords.longitude);const h=findHex(userPoint.x,userPoint.y);if(!h){toast('📍 No estás dentro de la zona de Polygon');return}gpsReady=true;updateSector(h);positionUserMarker();callback(h)},()=>toast('📍 Necesitamos tu ubicación para reportar'),{enableHighAccuracy:true,timeout:10000,maximumAge:60000})}
 function report(status){requireGPS(h=>{if(status==='outage'){const key='polygonOutage-'+h.id;if(localStorage.getItem(key)){toast('🛑 Ya reportaste sin luz en '+h.id);return}}h.classList.remove('stable','unstable','outage');h.classList.add(status);h.dataset.status=status;h.dataset.reportCount=String(Number(h.dataset.reportCount||0)+1);if(status==='outage')localStorage.setItem('polygonOutage-'+h.id,JSON.stringify({device:deviceKey,at:Date.now()}));updateSector(h);document.getElementById('source').textContent='Reporte registrado · GPS verificado';toast(status==='stable'?'🟢 Reporte guardado':'🔴 Reporte guardado')})}
+const locateBtn=document.getElementById('locateButton');
+if(locateBtn){locateBtn.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();locateButton()});locateBtn.addEventListener('touchend',e=>{e.preventDefault();e.stopPropagation();locateButton()},{passive:false});}
 window.addEventListener('resize',()=>positionUserMarker());
-window.addEventListener('load',()=>{applyView();setTimeout(()=>requestLocation(true),250)});
+window.addEventListener('load',()=>{applyView();setTimeout(()=>requestLocation(true),350)});
 applyView();
 </script></body></html>
